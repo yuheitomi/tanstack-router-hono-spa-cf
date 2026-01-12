@@ -1,3 +1,3 @@
-import type app from "./app";
+import type app from ".";
 
 export type AppType = typeof app;

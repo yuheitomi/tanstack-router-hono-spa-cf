@@ -17,7 +17,7 @@
       "!./.cursor/**/*",
 
       // Tanstack
-      "!**/src/routeTree.gen.ts",
+      "!**/routeTree.gen.ts",
 
       // Cloudflare
       "!worker-configuration.d.ts"

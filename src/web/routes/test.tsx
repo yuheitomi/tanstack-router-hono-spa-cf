@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { honoClient } from "@/web/lib/api";
+import { honoClient } from "@/web/lib/hono";
 
 export const Route = createFileRoute("/test")({
   loader: async () => {

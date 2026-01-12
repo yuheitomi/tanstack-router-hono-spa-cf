@@ -9,6 +9,7 @@ export default function Header() {
     <>
       <header className="flex items-center bg-gray-800 p-4 text-white shadow-lg">
         <button
+          type="button"
           onClick={() => setIsOpen(true)}
           className="rounded-lg p-2 transition-colors hover:bg-gray-700"
           aria-label="Open menu"
@@ -30,6 +31,7 @@ export default function Header() {
         <div className="flex items-center justify-between border-gray-700 border-b p-4">
           <h2 className="font-bold text-xl">Navigation</h2>
           <button
+            type="button"
             onClick={() => setIsOpen(false)}
             className="rounded-lg p-2 transition-colors hover:bg-gray-800"
             aria-label="Close menu"

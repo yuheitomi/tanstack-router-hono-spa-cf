@@ -11,8 +11,8 @@ const route = new Hono()
     return c.json({
       todos: [
         { id: 1, name: "Buy groceries" },
-        { id: 2, name: "Buy groceries" },
-        { id: 3, name: "Buy groceries" },
+        { id: 2, name: "Buy books" },
+        { id: 3, name: "Buy movies" },
       ],
     });
   });
