@@ -1,8 +1,8 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "temp-tsrouter",
+	"name": "tanstack-router-hono-spa",
 	"main": "src/api/index.ts",
-	"compatibility_date": "2025-09-27",
+	"compatibility_date": "2025-12-27",
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS",

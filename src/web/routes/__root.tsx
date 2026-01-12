@@ -3,14 +3,14 @@ import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import Header from "../components/header";
-import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
+import Header from "@/web/components/header";
+import TanStackQueryDevtools from "@/web/integrations/tanstack-query/devtools";
 
-export interface MyRouterContext {
+export interface RouterContext {
   queryClient: QueryClient;
 }
 
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <>
       <Header />

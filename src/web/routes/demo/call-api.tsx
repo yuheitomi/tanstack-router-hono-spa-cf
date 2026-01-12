@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { honoClient } from "@/web/lib/hono";
 
-export const Route = createFileRoute("/test")({
+export const Route = createFileRoute("/demo/call-api")({
   loader: async () => {
     const response = await honoClient.api.demo.health.$get().then((res) => res.json());
     return response;
