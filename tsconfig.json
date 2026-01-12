@@ -1,0 +1,10 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.web.json" },
+    { "path": "./tsconfig.worker.json" }
+  ],
+  "compilerOptions": {
+    "types": ["./worker-configuration.d.ts"]
+  }
+}
