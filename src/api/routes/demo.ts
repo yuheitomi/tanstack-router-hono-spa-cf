@@ -1,11 +1,13 @@
 import { Hono } from "hono";
 
-const route = new Hono()
+const route = new Hono<{ Bindings: Env }>()
   .get("/health", (c) => {
-    return c.json({ status: "ok", timestamp: new Date().toISOString() });
+    const message = c.env.TEST_VAR;
+    return c.json({ status: "ok", timestamp: new Date().toISOString(), message });
   })
   .get("/test", (c) => {
-    return c.json({ name: "Cloudflare", message: "Hello from Hono!" });
+    const message = c.env.TEST_VAR;
+    return c.json({ name: "Cloudflare", message });
   })
   .get("/todos", (c) => {
     return c.json({

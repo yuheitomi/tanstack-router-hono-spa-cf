@@ -28,7 +28,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite/client"]
+    "types": ["./worker-configuration.d.ts", "vite/client"]
   },
   "include": ["src/web", "src/api"]
 }

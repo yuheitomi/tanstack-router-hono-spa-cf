@@ -14,5 +14,8 @@
 	},
 	"placement": {
 		"mode": "smart"
+	},
+	"vars": {
+		"TEST_VAR": "test"
 	}
 }
