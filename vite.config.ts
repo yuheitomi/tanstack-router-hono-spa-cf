@@ -3,12 +3,23 @@ import tailwindcss from "@tailwindcss/vite";
 import { devtools } from "@tanstack/devtools-vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import viteReact from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
+import { defineConfig, lazyPlugins } from "vite-plus";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
+  fmt: {
+    ignorePatterns: ["src/web/routeTree.gen.ts", "worker-configuration.d.ts"],
+  },
+  lint: {
+    ignorePatterns: ["src/web/routeTree.gen.ts", "worker-configuration.d.ts"],
+    jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
+    rules: { "vite-plus/prefer-vite-plus-imports": "error" },
+    options: { typeAware: true, typeCheck: true },
+  },
+  resolve: {
+    tsconfigPaths: true,
+  },
+  plugins: lazyPlugins(() => [
     devtools(),
     tanstackRouter({
       target: "react",
@@ -18,7 +29,6 @@ export default defineConfig({
     }),
     viteReact(),
     tailwindcss(),
-    tsconfigPaths(),
     cloudflare(),
-  ],
+  ]),
 });
