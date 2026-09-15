@@ -1,0 +1,24 @@
+{
+  "languages": {
+    "TypeScript": {
+      "language_servers": [
+        "typescript-ls",
+        "oxfmt",
+        "oxlint",
+        "tailwindcss-language-server",
+        "!vtsls",
+        "!typescript-language-server",
+      ]
+    },
+    "TSX": {
+      "language_servers": [
+        "typescript-ls",
+        "oxfmt",
+        "oxlint",
+        "tailwindcss-language-server",
+        "!vtsls",
+        "!typescript-language-server",
+      ]
+    }
+  }
+}
