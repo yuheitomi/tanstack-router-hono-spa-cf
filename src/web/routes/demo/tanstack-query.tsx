@@ -4,17 +4,20 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { honoClient } from "@/web/lib/hono";
 
-const todoQuery = queryOptions({
-  queryKey: ["todos"],
-  queryFn: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return honoClient.api.demo.todos.$get().then((res) => res.json());
-  },
-});
+async function getTodos() {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  return honoClient.api.demo.todos.$get().then((res) => res.json());
+}
 
 export const Route = createFileRoute("/demo/tanstack-query")({
-  loader: async ({ context }) => {
-    await context.queryClient.prefetchQuery(todoQuery);
+  context: () => ({
+    todoQueryOptions: queryOptions({
+      queryKey: ["todos"],
+      queryFn: getTodos,
+    }),
+  }),
+  loader: ({ context }) => {
+    void context.queryClient.query(context.todoQueryOptions).catch(() => undefined);
   },
   component: TanStackQueryDemo,
 });
@@ -39,7 +42,8 @@ function TanStackQueryDemo() {
 }
 
 function TodoList() {
-  const { data } = useSuspenseQuery(todoQuery);
+  const { todoQueryOptions } = Route.useRouteContext();
+  const { data } = useSuspenseQuery(todoQueryOptions);
 
   return (
     <ul className="mb-4 space-y-2">
