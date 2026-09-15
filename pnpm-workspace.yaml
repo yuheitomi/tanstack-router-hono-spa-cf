@@ -1,4 +1,36 @@
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
+minimumReleaseAgeExclude:
+  - "@cloudflare/vitest-plugin@1.1.9"
+  - miniflare@5.20260911.1-alpha
+  - wrangler@4.131.2
+  - "@voidzero-dev/vite-plus-core@0.3.2"
+  - "@voidzero-dev/vite-plus-darwin-arm64@0.3.2"
+  - "@voidzero-dev/vite-plus-darwin-x64@0.3.2"
+  - "@voidzero-dev/vite-plus-linux-arm64-gnu@0.3.2"
+  - "@voidzero-dev/vite-plus-linux-arm64-musl@0.3.2"
+  - "@voidzero-dev/vite-plus-linux-x64-gnu@0.3.2"
+  - "@voidzero-dev/vite-plus-linux-x64-musl@0.3.2"
+  - "@voidzero-dev/vite-plus-win32-arm64-msvc@0.3.2"
+  - "@voidzero-dev/vite-plus-win32-x64-msvc@0.3.2"
+  - vite-plus@0.3.2
 onlyBuiltDependencies:
   - esbuild
   - sharp
   - workerd
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@0.3.2
+  vitest: 4.1.11
+  vite-plus: 0.3.2
+overrides:
+  vite@*: "catalog:"
+  vitest@*: "catalog:"
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: "*"
+    vitest: "*"

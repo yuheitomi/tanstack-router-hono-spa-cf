@@ -14,7 +14,7 @@ const todoQuery = queryOptions({
 
 export const Route = createFileRoute("/demo/tanstack-query")({
   loader: async ({ context }) => {
-    context.queryClient.prefetchQuery(todoQuery);
+    await context.queryClient.prefetchQuery(todoQuery);
   },
   component: TanStackQueryDemo,
 });

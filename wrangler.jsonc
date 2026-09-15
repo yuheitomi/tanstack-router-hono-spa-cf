@@ -1,21 +1,22 @@
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "tanstack-router-hono-spa",
-	"main": "src/api/index.ts",
-	"compatibility_date": "2025-12-27",
-	"assets": {
-		"directory": "./dist",
-		"binding": "ASSETS",
-		"not_found_handling": "single-page-application",
-		"run_worker_first": ["/api/*"]
-	},
-	"observability": {
-		"enabled": true
-	},
-	"placement": {
-		"mode": "smart"
-	},
-	"vars": {
-		"TEST_VAR": "test"
-	}
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tanstack-router-hono-spa",
+  "main": "src/api/index.ts",
+  "compatibility_date": "2026-09-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"],
+  },
+  "observability": {
+    "enabled": true,
+  },
+  "placement": {
+    "mode": "smart",
+  },
+  "vars": {
+    "TEST_VAR": "test",
+  },
 }
