@@ -1,8 +1,11 @@
 import { Suspense } from "react";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { useFormStatus } from "react-dom";
+import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { honoClient } from "@/web/lib/hono";
+
+const todosQueryKey = ["todos"];
 
 async function getTodos() {
   await new Promise((resolve) => setTimeout(resolve, 500));
@@ -12,7 +15,7 @@ async function getTodos() {
 export const Route = createFileRoute("/demo/tanstack-query")({
   context: () => ({
     todoQueryOptions: queryOptions({
-      queryKey: ["todos"],
+      queryKey: todosQueryKey,
       queryFn: getTodos,
     }),
   }),
@@ -36,6 +39,7 @@ function TanStackQueryDemo() {
         <Suspense fallback={<div>Loading...</div>}>
           <TodoList />
         </Suspense>
+        <AddTodoForm />
       </div>
     </div>
   );
@@ -56,5 +60,60 @@ function TodoList() {
         </li>
       ))}
     </ul>
+  );
+}
+
+function AddTodoForm() {
+  const queryClient = useQueryClient();
+
+  const addTodo = useMutation({
+    mutationFn: async (name: string) => {
+      const res = await honoClient.api.demo.todos.$post({ json: { name } });
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error);
+      }
+      return res.json();
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: todosQueryKey }),
+  });
+
+  return (
+    <form
+      action={async (formData) => {
+        const name = formData.get("name");
+        if (typeof name !== "string" || name.trim() === "") return;
+        // mutateAsync rejects on failure; an unhandled rejection inside a form
+        // action reaches the nearest error boundary, so keep it here instead.
+        await addTodo.mutateAsync(name).catch(() => undefined);
+      }}
+      className="flex gap-2"
+    >
+      <input
+        name="name"
+        placeholder="Add a todo"
+        className="flex-1 rounded-lg border border-white/20 bg-white/10 p-3 text-white placeholder:text-white/50 backdrop-blur-sm"
+      />
+      <SubmitButton />
+      {addTodo.isError && (
+        <p role="alert" className="basis-full text-sm text-red-300">
+          {addTodo.error.message}
+        </p>
+      )}
+    </form>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="rounded-lg border border-white/20 bg-white/20 px-4 py-3 text-white shadow-md backdrop-blur-sm disabled:opacity-50"
+    >
+      {pending ? "Adding..." : "Add"}
+    </button>
   );
 }
