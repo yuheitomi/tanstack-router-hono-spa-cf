@@ -7,7 +7,7 @@
         "oxlint",
         "tailwindcss-language-server",
         "!vtsls",
-        "!typescript-language-server",
+        "!typescript-language-server"
       ]
     },
     "TSX": {
@@ -17,7 +17,7 @@
         "oxlint",
         "tailwindcss-language-server",
         "!vtsls",
-        "!typescript-language-server",
+        "!typescript-language-server"
       ]
     }
   }
