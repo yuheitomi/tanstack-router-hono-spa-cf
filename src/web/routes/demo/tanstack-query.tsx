@@ -3,20 +3,20 @@ import { useFormStatus } from "react-dom";
 import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { honoClient } from "@/web/lib/hono";
+import type { HonoClient } from "@/web/lib/hono";
 
 const todosQueryKey = ["todos"];
 
-async function getTodos() {
+async function getTodos(hono: HonoClient) {
   await new Promise((resolve) => setTimeout(resolve, 500));
-  return honoClient.api.demo.todos.$get().then((res) => res.json());
+  return hono.api.demo.todos.$get().then((res) => res.json());
 }
 
 export const Route = createFileRoute("/demo/tanstack-query")({
-  context: () => ({
+  context: ({ context }) => ({
     todoQueryOptions: queryOptions({
       queryKey: todosQueryKey,
-      queryFn: getTodos,
+      queryFn: () => getTodos(context.hono),
     }),
   }),
   loader: ({ context }) => {
@@ -65,10 +65,11 @@ function TodoList() {
 
 function AddTodoForm() {
   const queryClient = useQueryClient();
+  const { hono } = Route.useRouteContext();
 
   const addTodo = useMutation({
     mutationFn: async (name: string) => {
-      const res = await honoClient.api.demo.todos.$post({ json: { name } });
+      const res = await hono.api.demo.todos.$post({ json: { name } });
       if (!res.ok) {
         const { error } = await res.json();
         throw new Error(error);

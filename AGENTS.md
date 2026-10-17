@@ -35,15 +35,17 @@ This is a full-stack SPA template deploying to Cloudflare Workers. It uses a uni
 - Entry point: `src/web/main.tsx`
 - Routes: `src/web/routes/` - file-based routing via TanStack Router plugin
 - Route tree is auto-generated at `src/web/routeTree.gen.ts`
-- Hono client: `src/web/lib/hono.ts` - type-safe API client using `AppType`
+- Hono client: `src/web/lib/hono.ts` - `createHonoClient` factory typed with `AppType`; the instance is created in `main.tsx` and provided through router context as `hono`
 
 **Type-Safe API Calls**:
 The frontend uses Hono's RPC client for end-to-end type safety:
 
 ```typescript
-import { honoClient } from "@/web/lib/hono";
-// Types inferred from API routes
-const res = await honoClient.api.demo.todos.$get();
+// In a loader or route `context` option
+loader: ({ context }) => context.hono.api.demo.todos.$get();
+// In a component
+const { hono } = Route.useRouteContext();
+const res = await hono.api.demo.todos.$get();
 ```
 
 ### TypeScript Configuration

@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import ReactDOM from "react-dom/client";
 
+import { createHonoClient } from "./lib/hono.ts";
 import * as TanStackQueryProvider from "./integrations/tanstack-query/root-provider.tsx";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
@@ -17,6 +18,7 @@ const router = createRouter({
   routeTree,
   context: {
     ...TanStackQueryProviderContext,
+    hono: createHonoClient("/"),
   },
   defaultPreload: "intent",
   scrollRestoration: true,

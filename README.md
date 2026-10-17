@@ -49,7 +49,7 @@ src/
     ├── integrations/       # TanStack Query provider and devtools
     ├── components/
     └── lib/
-        ├── hono.ts         # Typed API client
+        ├── hono.ts         # Typed API client factory
         └── utils.ts        # cn() helper for shadcn/ui
 ```
 
@@ -72,10 +72,16 @@ export default route;
 // src/api/index.ts
 const api = new Hono().basePath("/api").route("/todos", todosRoute);
 
-// src/web — fully typed request and response
-import { honoClient } from "@/web/lib/hono";
-const res = await honoClient.api.todos.$get();
-const { todos } = await res.json();
+// src/web/routes/todos.tsx — the client comes from router context
+export const Route = createFileRoute("/todos")({
+  loader: async ({ context }) => {
+    const res = await context.hono.api.todos.$get(); // fully typed
+    return res.json();
+  },
+});
+
+// inside a component
+const { hono } = Route.useRouteContext();
 ```
 
 Keep routes chained (`new Hono().get(...).post(...)`) rather than calling `app.get(...)` on separate lines, or the route types are lost.

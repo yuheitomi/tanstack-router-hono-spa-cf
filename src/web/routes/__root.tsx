@@ -5,9 +5,11 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
 import Header from "@/web/components/header";
 import TanStackQueryDevtools from "@/web/integrations/tanstack-query/devtools";
+import type { HonoClient } from "@/web/lib/hono";
 
 export interface RouterContext {
   queryClient: QueryClient;
+  hono: HonoClient;
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
