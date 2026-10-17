@@ -9,3 +9,7 @@ count.txt
 .tanstack
 .wrangler
 worker-configuration.d.ts
+
+# Cloudflare local secrets
+.dev.vars*
+!.dev.vars.example
